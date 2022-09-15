@@ -97,6 +97,9 @@ animate_equip_bar = true
 neutral_brand = hi:darkgrey
 monster_list_colour += neutral:blue
 monster_list_colour += good_neutral:lightgreen
+#note_messages += *
+#note_messages += .
+#note_messages +=  
 
 
 # allow_extended_colours = true
@@ -246,6 +249,8 @@ crawl.mpr("W - Pseudo Near Death Message")
 crawl.more()
 crawl.mpr("I - Pseudoidentify")
 crawl.more()
+crawl.mpr("E - Embark Message (Reason)")
+crawl.more()
 end
 if (res == "1") then
 randitem()
@@ -321,6 +326,9 @@ pseudoquest()
 end
 if (res == "W") then
 pseudosurvive()
+end
+if (res == "E") then
+embark()
 end
 
 end
@@ -587,7 +595,6 @@ end
 return col
 end
 
-
 function raceglyph()
 --if not string.find(you.race(), "Draconian") then
 --playercolor = num_to_col(string.len(you.name()))
@@ -823,7 +830,7 @@ if (tattoo == nil) or (tattoo == "") then
 tattoo = randcol() .. " " .. util.random_from({"arrow", "arbalest", "spear", "shield", "fireball", "potion", "goblet", "axe", "sword", "dagger", "hammer", "skull", "skeleton", "spikes", "meaningless", "butterfly", "flower", "horn", "hoof", "snake", "wolf", "hound", "star", "triangle", "circle", "letter", "man", "woman", "dragon", "heart", "wings", "spikes", "roses", "unicorn"})
 end
 if (tattoo_placement == nil) or (tattoo_placement == "") then
-tattoo_placement = util.random_from({"groin", "shoulder", "thigh", "butt", "neck", "chest", "hand", "arm", "leg", "face", "stomach"})
+tattoo_placement = util.random_from({"groin", "shoulder", "thigh", "butt", "neck", "chest", "hand", "arm", "leg", "face", "stomach", "foot"})
 end
 
 if (crawl.random2(100)+1 < 70) then
@@ -853,6 +860,25 @@ if you.race() == "Tengu" then
 hairlengthstring = util.random_from({"small", "medium-sized", "large", "huge", "colossal"})
 hairstyle = util.random_from({"flight feathers", "contour feathers", "down feathers", "bristle feathers", "plumed feathers"})
 beard = util.random_from({"hooked beak", "cone shaped beak", "curved beak", "straight beak", "thin beak", "wide beak", "strong beak"})
+end
+
+if you.race() == "Formicid" then
+hairlengthstring = util.random_from({"small", "medium-sized", "large", "huge", "colossal"})
+hairstyle = util.random_from({"thread-like antennae", "beaded antennae", "sawtoothed antennae", "bristle-like antennae", "comb-like antennae"})
+beard = util.random_from({"pair of chewing mandibles", "pair of stylets", "pair of long mandibles", "pair of hardened mandibles", "pair of large mandibles", "pair of piercing mandibles", "pair of strong mandibles"})
+end
+
+if you.race() == "Felid" then
+hairlengthstring = util.random_from({"short", "short striped", "short spotted", "medium-length striped", "medium-length", "medium-length spotted", "long", "long striped", "long spotted"})
+hairstyle = util.random_from({"fur", "hairless skin"})
+beard = util.random_from({"pair of whiskers", "pair of short whiskers", "pair of broken whiskers"})
+tattoo = randcol() .. " " .. util.random_from({"solid cat marking", "point cat marking", "van cat marking", "tabby cat marking", "tortie cat marking"})
+tattoo_placement = util.random_from({"body", "feet"})
+
+if (crawl.random2(100)+1 < 70) then
+tattoo = "empty"
+end
+
 end
 
 if you.race() == "Deep Elf" then
@@ -1015,6 +1041,7 @@ end
 char_appearance(name, hairstyle, body, haircolorstring, hairlengthstring, gender, eyebrows, eyes, voice, beard, tattoo, tattoo_placement)
 end
 if (res == true) then
+crawl.take_note("+++========================+++")
 crawl.take_note("" .. name .. " has ".. crawl.article_a("" ..   haircolorstring .. " " .. hairlengthstring .. " " .. hairstyle .. "") .. ".")
 if gender == "masculine" then
 crawl.take_note("" .. name .. " has " .. crawl.article_a("" .. haircolorstring .. " " .. beard .. "") .. ".")
@@ -1026,6 +1053,7 @@ crawl.take_note("" .. name .. " has " .. crawl.article_a(voice) .. " voice.")
 if not(tattoo == "empty") then
 crawl.take_note("" .. name .. " has a tattoo of " .. tattoo .. " on their " .. tattoo_placement .. ".")
 end
+crawl.take_note("+++========================+++")
 end
 end
 
@@ -1645,6 +1673,40 @@ crawl.take_note("Got " .. crawl.article_a(item))
 crawl.sendkeys(".")
 crawl.take_note("Identified the " .. item .. " (You found it on " .. you.where() .. ")")
 end
+end
+
+function embark()
+local background = util.random_from({"You grew up without any inconveniences.", "You were raised by a different race.", "You were used for experimentation.", "You have amnesia.", "You were a faithful servant.", "You destroyed your own hometown, for various reasons.", "For some reason, you were asleep for a long time.", "You were a local lord.", "You were brought up as a family heir.", "You actually come from the future.", "You were loved by everyone.", "You've been abused since childhood.", "You were detested and abandoned as a child.", "Your family line is that of famous mages.", "You were a prisoner for a long time.", "You were a member of a royal family.", "Your birth was a secret.", "You were a slave.", "You lost your parents early.", "You were poor, but grew up strongly.", "You lost your hometown in a war.", "You were found and raised by thieves.", "You were a powerful god.", "You grew up normally in an ordinary home.", "You were artificially created through an experiment.", "In the past you were a villain.", "You had no family.", "You spent your days in peace.", "You were incapacitated by disease for a long time."})
+
+local reason = util.random_from({"You embark to find yourself.", "You embark on your journey lightheartedly.", "You embark to fulfill an important promise.", "You embark as an adventurer because you didn't like your situation.", "You embark in search of excitement.", "You embark in search of a missing person.", "You embark in search of romance.", "You embark to find better work.", "You embark in order to become stronger.", "You embark to travel the world.", "You embark to help forget a broken heart.", "You embark to work towards world peace.", "You embark to work towards world domination.", "You embark on adventure, guided by fate.", "You embark because you fear for your life.", "You embark due to a revelation from god.", "You embark due to being ousted from your hometown as a criminal.", "You embark due to admiring an adventurer, and wanting to be one yourself.", "You were summoned to this world.", "You became an adventurer because you heard it was profitable.", "You were involved in a conspiracy and banished.", "You embark to flee from your past.", "You became an adventurer to protect something precious.", "You became an adventurer to seek fame.", "You embark in search of atonement.", "You were loaded onto the ship while you slept.", "You embark in search of undiscovered treasures.", "You embark to pursue the mysteries of an ancient civilization."})
+
+local quirk0 = "" .. util.random_from({"While", "Although", "Though"}) .. " " .. util.random_from({"knowing many things", "you are ordinary", "you are bold and daring", "you're the life of the party", "you are calm and collected", "you're always strict with yourself", "you have the brains of a genius", "friends with everyone", "you are passionate at heart", "you never give up", "gentle and merciful", "always polite", "you have a keen eye"}) .. ", "
+
+local quirk1 = util.random_from({"You are insensitive to the goodwill of others.", "You have a bad habit of getting caught up in delusions.", "You look down on others.", "You are in enormous debt.", "Your fashion sense is weird.", "You worry about your body odor.", "Your personality changes when you hold a knife.", "You've experienced major trauma.", "You do not trust others.", "You are surprisingly servile.", "You suffer from a rare disease.", "You are cold to those you are not interested in.", "Your grasp of money is poor.", "You're not good at socializing.", "You easily get carried away.", "Your sense of taste is odd.", "You are undisciplined in your private life.", "You make lots of blunders.", "You fail at the essentials.", "You are undisciplined in your private life.", "You act terribly when drunk.", "You hate yourself.", "You have no confidence in yourself.", "You're actually a gigantic pervert.", "You have no sense of direction.", "You are in love with money.", "You are self conscious.", "You have no gag reflex.", "You are greedy.", "Your paintings are terrible.", "You make terrible misunderstandings.", "You don't have any friends worth mentioning.", "You make terrible misunderstandings.", "You're easy to read.", "You often misunderstand situations.", "You're bad with insects.", "You don't have much of a presence.", "You're very prideful.", "You love shady things.", "You hide your personality from others."})
+
+local quirk2 = util.random_from({"Imprisonment is your hobby.", "Your hobby is stalking.", "You like to see people's faces distorted in pain.", "Gardening is your hobby.", "You like stuffed animals.", "You're a self-proclaimed sadist.", "You risk your life for creative activities.", "Hunting is your hobby.", "You're interesting in the clothes of the opposite sex.", "You love small animals.", "You yearn for your master.", "You have memories of your past life.", "You like to exercise.", "You yearn for your master.", "Your intuition is sharp.", "Your hobby is napping.", "You have a strong attachment to life.", "Your hobby is reading.", "You love using violence.", "You have a secret that you can't tell anyone.", "You're good at singing.", "You are gullible.", "You're bad at lying.", "You fall in love easily.", "You're a hard worker.", "You had a mission you failed to achieve.", "You like making fun of others.", "You have followers.", "You hold a powerful grudge against someone.", "You fear betrayal above everything else.", "You like to collect junk."})
+
+crawl.mpr("<lightblue>" .. background .. "</lightblue>")
+crawl.mpr("<green>" .. reason .. "</green>")
+crawl.mpr("<cyan>" .. quirk0 .. "</cyan>")
+crawl.mpr("<red>" .. quirk1 .. "</red>")
+crawl.mpr("<cyan>" .. quirk2 .. "</cyan>")
+
+local res =crawl.yesno("<yellow>Proceed with personal background?</yellow>")
+if not(res == true) then
+crawl.clear_messages()
+embark()
+end
+if (res == true) then
+crawl.take_note("+++========================+++")
+crawl.take_note(background)
+crawl.take_note(reason)
+crawl.take_note(quirk0)
+crawl.take_note(quirk1)
+crawl.take_note(quirk2)
+crawl.take_note("+++========================+++")
+end
+
 end
 
 function console()
