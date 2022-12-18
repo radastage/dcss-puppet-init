@@ -6,7 +6,9 @@ Just drop this stuff in your "settings" folder wherever your DCSS is installed. 
 Open your macro.txt and add line:
 
 M:[
+
 A:===menu
+
 ([ can be changed to any key you want)
 
 Misc Info:
