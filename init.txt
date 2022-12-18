@@ -205,7 +205,7 @@ crawl.mpr("2 - Colour Inscribe Alt")
 crawl.more()
 crawl.mpr("3 - Dungeon Site")
 crawl.more()
-crawl.mpr("4 - Random Follower")
+crawl.mpr("4 - Random Follower <13>(&)</13>")
 crawl.more()
 crawl.mpr("5 - Random Number (1-100)")
 crawl.more()
@@ -215,25 +215,25 @@ crawl.mpr("7 - Persist Note Default")
 crawl.more()
 crawl.mpr("8 - Persist Note Players")
 crawl.more()
-crawl.mpr("9 - Enchanting")
+crawl.mpr("9 - Enchanting <13>(&)</13>")
 crawl.more()
 crawl.mpr("P - Polymorph")
 crawl.more()
-crawl.mpr("F - Feature Placement")
+crawl.mpr("F - Feature Placement <13>(&)</13>")
 crawl.more()
 crawl.mpr("J - Char Describe Macro (Misc)")
 crawl.more()
 crawl.mpr("D - Drop Everything")
 crawl.more()
-crawl.mpr("b - Build")
+crawl.mpr("b - Build <13>(&)</13>")
 crawl.more()
-crawl.mpr("O - Freeplay")
+crawl.mpr("O - Freeplay <13>(&)</13>")
 crawl.more()
-crawl.mpr("C - Spawn Random")
+crawl.mpr("C - Spawn Random <13>(&)</13>")
 crawl.more()
-crawl.mpr("V - Make Randart")
+crawl.mpr("V - Make Randart <13>(&)</13>")
 crawl.more()
-crawl.mpr("a - Modify Amount")
+crawl.mpr("a - Modify Amount <13>(&)</13>")
 crawl.more()
 crawl.mpr("Z - Console")
 crawl.more()
@@ -355,7 +355,6 @@ if not (you.race() == "Felid") and not (you.race() == "Octopode") and you.turns(
 use_appearance = false
 local name = you.name()
 char_appearance(name)
---clothing(name)
 char_traits()
 crawl.sendkeys(".")
 --randlocation()
@@ -818,51 +817,40 @@ end
 end
 
 function char_appearance(name, hairstyle, body, haircolorstring, hairlengthstring, gender, eyebrows, eyes, voice, beard, tattoo, tattoo_placement)
-if (hairstyle == "") or (hairstyle == nil) then
-hairstyle = util.random_from({"ponytail", "mohawk", "twintail", "topknot", "curly hair", "wavy hair", "straight hair", "dreadlock", "pompadour", "afro", "braid", "hair", "spiky hair", "bun", "double buns hair", "pigtail", "mullet", "reverse mohawk", "combed hair", "tonsure"})
-end
-
-if (beard == nil) or (beard == "") then
-beard = util.random_from({"moustache", "beard", "goatee", "long beard", "short beard", "shaved beard", "sideburns beard", "whiskers beard", "neckbeard"})
-end
-
-if (tattoo == nil) or (tattoo == "") then
+if (tattoo == nil) or (tattoo == "") and (crawl.random2(100) > 75) or (tattoo == "random") then
 tattoo = randcol() .. " " .. util.random_from({"arrow", "arbalest", "spear", "shield", "fireball", "potion", "goblet", "axe", "sword", "dagger", "hammer", "skull", "skeleton", "spikes", "meaningless", "butterfly", "flower", "horn", "hoof", "snake", "wolf", "hound", "star", "triangle", "circle", "letter", "man", "woman", "dragon", "heart", "wings", "spikes", "roses", "unicorn"})
 end
 if (tattoo_placement == nil) or (tattoo_placement == "") then
 tattoo_placement = util.random_from({"groin", "shoulder", "thigh", "butt", "neck", "chest", "hand", "arm", "leg", "face", "stomach", "foot"})
 end
 
-if (crawl.random2(100)+1 < 70) then
-tattoo = "empty"
-end
-if you.race() == "Draconian" or you.race() == "Merfolk" or you.race() == "Naga" or you.race() == "Barachi" then
+if (you.race() == "Draconian" or you.race() == "Merfolk" or you.race() == "Naga" or you.race() == "Barachi")and(hairstyle == nil or hairstyle == "") then
 hairstyle = util.random_from({"frills", "spikes", "decorated spikes"})
 beard = util.random_from({"tentacles", "shaved beard"})
 end
 
-if you.race() == "Demonspawn" then
+if (you.race() == "Demonspawn")and(hairstyle == nil or hairstyle == "") then
 hairstyle = util.random_from({"horns", "horn", "spikes", "decorated spikes"})
 beard = util.random_from({"chin horns", "chin spikes"})
 end
 
-if you.race() == "Vine Stalker" or you.race() == "Spriggan" then
+if (you.race() == "Vine Stalker" or you.race() == "Spriggan")and(hairstyle == nil or hairstyle == "") then
 hairstyle = "" .. util.random_from({"leaves", "branches", "thorns", "mushrooms", "flowers", "tangles", "berries"}) .. " all over their body"
 beard = util.random_from({"leaves", "branches", "thorns", "mushrooms", "flowers", "tangles", "berries"}) .. " all over their face"
 hairlengthstring = util.random_from({"small", "medium-sized", "large", "huge", "colossal"})
 end
 
-if you.race() == "Deep Dwarf" then
+if (you.race() == "Deep Dwarf") and (beard == nil or beard == "") then
 beard = util.random_from({"beard", "long beard", "short beard"})
 end
 
-if you.race() == "Tengu" then
+if (you.race() == "Tengu") and(hairstyle == nil or hairstyle == "") then
 hairlengthstring = util.random_from({"small", "medium-sized", "large", "huge", "colossal"})
 hairstyle = util.random_from({"flight feathers", "contour feathers", "down feathers", "bristle feathers", "plumed feathers"})
 beard = util.random_from({"hooked beak", "cone shaped beak", "curved beak", "straight beak", "thin beak", "wide beak", "strong beak"})
 end
 
-if you.race() == "Formicid" then
+if (you.race() == "Formicid") and(hairstyle == nil or hairstyle == "") then
 hairlengthstring = util.random_from({"small", "medium-sized", "large", "huge", "colossal"})
 hairstyle = util.random_from({"thread-like antennae", "beaded antennae", "sawtoothed antennae", "bristle-like antennae", "comb-like antennae"})
 beard = util.random_from({"pair of chewing mandibles", "pair of stylets", "pair of long mandibles", "pair of hardened mandibles", "pair of large mandibles", "pair of piercing mandibles", "pair of strong mandibles"})
@@ -872,17 +860,22 @@ if you.race() == "Felid" then
 hairlengthstring = util.random_from({"short", "short striped", "short spotted", "medium-length striped", "medium-length", "medium-length spotted", "long", "long striped", "long spotted"})
 hairstyle = util.random_from({"fur", "hairless skin"})
 beard = util.random_from({"pair of whiskers", "pair of short whiskers", "pair of broken whiskers"})
+if (tattoo == nil) or (tattoo == "") and (crawl.random2(100) > 75) then
 tattoo = randcol() .. " " .. util.random_from({"solid cat marking", "point cat marking", "van cat marking", "tabby cat marking", "tortie cat marking"})
 tattoo_placement = util.random_from({"body", "feet"})
-
-if (crawl.random2(100)+1 < 70) then
-tattoo = "empty"
+end
 end
 
-end
-
-if you.race() == "Deep Elf" then
+if (you.race() == "Deep Elf")and(beard == nil or beard == "") then
 beard = "shaved beard"
+end
+
+if (hairstyle == "") or (hairstyle == nil) then
+hairstyle = util.random_from({"ponytail", "mohawk", "twintail", "topknot", "curly hair", "wavy hair", "straight hair", "dreadlock", "pompadour", "afro", "braid", "hair", "spiky hair", "bun", "double buns hair", "pigtail", "mullet", "reverse mohawk", "combed hair", "tonsure"})
+end
+
+if (beard == nil) or (beard == "") then
+beard = util.random_from({"moustache", "beard", "goatee", "long beard", "short beard", "shaved beard", "sideburns beard", "whiskers beard", "neckbeard"})
 end
 
 if you.race() == "Gargoyle" or you.race() == "Ghoul" or you.race() == "Spriggan" or you.race() == "Vine Stalker" or you.race() == "Demigod" or you.race() == "Mummy" then
@@ -935,7 +928,7 @@ crawl.mpr("" .. name .. " has " .. eyes .. " eyes.")
 crawl.more()
 crawl.mpr("" .. name .. " has " .. crawl.article_a("" .. body .. " " .. gender .. "") .. " body.")
 crawl.more()
-if not(tattoo == "empty") then
+if not(tattoo == "empty") and not(tattoo == "") and not(tattoo == nil) then
 crawl.mpr("" .. name .. " has a tattoo of " .. tattoo .. " on their " .. tattoo_placement .. ".")
 crawl.more()
 end
@@ -1015,7 +1008,7 @@ end
 if (res == "k") then
 crawl.clear_messages()
 crawl.mpr("Current tattoo: " .. tattoo)
-crawl.mpr("Please, enter new tattoo (leave blank for random)")
+crawl.mpr("Please, enter new tattoo (type 'random' for random, type 'empty' to remove)")
 tattoo = crawl.c_input_line()
 end
 if (res == "l") then
@@ -1050,40 +1043,12 @@ crawl.take_note("" .. name .. " has " .. eyebrows .. " " .. haircolorstring .. "
 crawl.take_note("" .. name .. " has " .. eyes .. " eyes.")
 crawl.take_note("" .. name .. " has " .. crawl.article_a("" .. body .. " " .. gender .. "") .. " body.")
 crawl.take_note("" .. name .. " has " .. crawl.article_a(voice) .. " voice.")
-if not(tattoo == "empty") then
+if not(tattoo == "empty") and not(tattoo == "") and not(tattoo == nil) then
 crawl.take_note("" .. name .. " has a tattoo of " .. tattoo .. " on their " .. tattoo_placement .. ".")
 end
 crawl.take_note("+++========================+++")
 end
 end
-
-function clothing(name)
-local shirt = util.random_from({"tunic", "vest", "coat", "doublet", "apron", "tank top", "harness", "long shirt", "shirt", "cloth rags", "wound dressing", "waistcoat", "bra", "dress"})
-local pants = util.random_from({"kilt", "skirt", "panties", "tight pants", "baggy pants", "shorts", "chonglers", "thong", "boxers", "loincloth", "pants", ""})
-local socks = util.random_from({"socks", "high socks", "long socks", "stockings", "fishnet stockings", "pantyhose", ""})
-local pattern = util.random_from({"striped ", "spotted ", "checkered ", "plaid ", ""})
-local clothing =  string
-if you.race() == "Naga" then
-socks = ""
-end
-if you.race() == "Centaur" then
-pants = ""
-end
-if not(shirt == "") then
-clothing = "".. name .. " is wearing " .. crawl.article_a(shirt)
-end
-if not(pants == "") and not(socks == "") then
-clothing = "" .. clothing .. ", " .. crawl.article_a(pants)
-end
-if not(pants == "") and socks == "" then
-clothing = "" .. clothing .. ", and " .. crawl.article_a(pants)
-end
-if not(socks == "") then
-clothing = "" .. clothing .. ", and " .. crawl.article_a(socks)
-end
-crawl.take_note("" .. clothing .. ".")
-end
-
 
 function length()
 local length = string
