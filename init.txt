@@ -243,6 +243,8 @@ crawl.mpr("K - Pseudonotice")
 crawl.more()
 crawl.mpr("Q - Pseudoquest")
 crawl.more()
+crawl.mpr("X - Erotic")
+crawl.more()
 crawl.mpr("S - Setup Character Appearance")
 crawl.more()
 crawl.mpr("W - Pseudo Near Death Message")
@@ -314,6 +316,9 @@ pseudobuy()
 end
 if (res == "K") then
 pseudofight()
+end
+if (res == "X") then
+erotic()
 end
 if (res == "I") then
 pseudoidentify()
@@ -592,6 +597,302 @@ if num == 15 then
 col = "white"
 end
 return col
+end
+
+function erotic()
+local role = ""
+local body = ""
+local activity = ""
+local partner = ""
+local consent = ""
+local action = ""
+local rough = util.random_from({"painful", "rough", "gentle"})
+local text = ""
+local pleasure = util.random_from({"It felt so good!", "It was very loud!", "You liked it.", "You felt gross.", "That was disgusting."})
+crawl.mpr("a) - dom")
+crawl.more()
+crawl.mpr("b) - sub")
+crawl.more()
+crawl.mpr("c) - solo")
+crawl.more()
+crawl.mpr("d) - random")
+crawl.more()
+crawl.mpr("<lightmagenta>Select your role.</lightmagenta>")
+local res = crawl.c_input_line()
+if (res == "a") then
+role = "dom"
+end
+if (res == "b") then
+role = "sub"
+end
+if (res == "c") then
+role = "solo"
+end
+if (res == "d") or (res == nil) or (res == "") then
+role = util.random_from({"dom", "sub", "solo"})
+end
+crawl.mpr("Your role is " .. role)
+crawl.more()
+if not (role == "solo") then
+crawl.mpr("a) - anal")
+crawl.more()
+crawl.mpr("b) - vaginal")
+crawl.more()
+crawl.mpr("c) - oral")
+crawl.more()
+crawl.mpr("d) - fetishism")
+crawl.more()
+crawl.mpr("e) - random")
+crawl.more()
+crawl.mpr("<lightmagenta>Select activity.</lightmagenta>")
+res = crawl.c_input_line()
+if (res == "a") then
+activity = "anal"
+end
+if (res == "b") then
+activity = "vaginal"
+end
+if (res == "c") then
+activity = "oral"
+end
+if (res == "d") then
+activity = "fetishism"
+end
+if (res == "e") or (res == nil) or (res == "") then
+activity = util.random_from({"anal", "vaginal", "oral", "fetishism"})
+end
+crawl.mpr("Your activity is " .. activity)
+crawl.more()
+if c_persist.partner and not (c_persist.partner == "") then
+crawl.mpr("<lightmagenta>Who is your partner?</lightmagenta> <yellow>(leave empty for " .. c_persist.partner .. "; type 'random' for a random)</yellow>")
+end
+if not c_persist.partner or (c_persist.partner == "") then
+crawl.mpr("<lightmagenta>Who is your partner?</lightmagenta> <yellow>(leave empty for random)</yellow>")
+end
+partner = crawl.c_input_line()
+if (partner == "") or (partner == nil) and c_persist.partner and not (c_persist.partner == "") then
+partner = c_persist.partner
+end
+if (partner == "") or (partner == nil) or (partner == "random") then
+partner = crawl.article_a(util.random_from({"orc", "orc wizard", "orc priest", "orc warrior", "orc knight", "orc warlord", "orc sorcerer", "demigod", "human", "halfling", "necromancer", "wizard", "death knight", "elf", "deep elf mage", "deep elf knight", "deep elf high priest", "deep elf archer", "deep elf demonologist", "deep elf sorcerer", "deep elf elementalist", "deep elf death mage", "deep elf annihilator", "deep elf master archer", "deep elf blademaster", "spriggan", "spriggan druid", "spriggan berserker", "spriggan air mage", "spriggan rider", "spriggan defender", "iron troll", "troll", "deep troll", "deep troll earth mage", "deep troll shaman", "kobold", "big kobold", "kobold demonologist", "barachi", "dwarf", "deep dwarf", "gnoll", "gnoll shaman", "gnoll sergeant", "demonspawn", "torturous demonspawn", "infernal demonspawn", "gelid demonspawn", "iron imp", "quasit", "shadow imp", "crimson imp", "guardian golem", "crystal guardian", "iron golem", "centaur", "centaur warrior", "naga", "naga ritualist", "naga mage", "naga warrior", "merfolk", "merfolk siren", "merfolk impaler", "merfolk javelineer", "merfolk aquamancer", "tengu reaver", "tengu", "tengu conjurer", "tengu warrior", "minotaur", "vine stalker", "octopode", "felid", "mummy", "ghoul", "draconian", "draconian monk", "draconian scorcher", "draconian knight", "draconian shifter", "draconian annihilator", "draconian stormcaller", "slave"}))
+end
+crawl.mpr("Your partner is " .. partner)
+c_persist.partner = partner
+crawl.more()
+crawl.mpr("<lightmagenta>Is it consensual? (y/n)</lightmagenta>")
+res = crawl.c_input_line()
+if (res == "n") then
+consent = "forced"
+crawl.mpr("Your consent is " .. consent)
+end
+if (res == "y") then
+consent = "given"
+crawl.mpr("Your consent is " .. consent)
+end
+if (res == "") or (res == nil) then
+consent = util.random_from({"given", "forced"})
+crawl.mpr("Your consent is " .. consent .. " (picked randomly)")
+end
+if (activity == "fetishism") then
+crawl.mpr("a) - genitals")
+crawl.mpr("b) - feet")
+crawl.mpr("c) - thighs")
+crawl.mpr("d) - butt")
+crawl.mpr("e) - neck")
+crawl.mpr("f) - chest")
+crawl.mpr("g) - hand")
+crawl.mpr("h) - lips")
+crawl.mpr("j) - hair")
+crawl.mpr("k) - stomach")
+crawl.mpr("l) - random")
+crawl.mpr("<lightmagenta>Which body part?</lightmagenta>")
+res = crawl.c_input_line()
+if (res == "a") then
+body = "genitals"
+end
+if (res == "b") then
+body = "feet"
+end
+if (res == "c") then
+body = "thighs"
+end
+if (res == "d") then
+body = "butt"
+end
+if (res == "e") then
+body = "neck"
+end
+if (res == "f") then
+body = "chest"
+end
+if (res == "g") then
+body = "hand"
+end
+if (res == "h") then
+body = "lips"
+end
+if (res == "j") then
+body = "hair"
+end
+if (res == "k") then
+body = "stomach"
+end
+if (res == "l") then
+body = util.random_from({"genitals", "feet", "thighs", "butt", "neck", "chest", "hand", "lips", "hair", "stomach"})
+end
+if (body == "") or (body == nil) then
+body = util.random_from({"genitals", "feet", "thighs", "butt", "neck", "chest", "hand", "lips", "hair", "stomach"})
+end
+crawl.mpr("Selected body part: " .. body)
+if (body == "genitals") then
+action = util.random_from({"gently bit", "licked", "tasted", "touched", "tickled", "stroked", "scratched", "sniffed", "kissed"})
+end
+if (body == "feet") then
+action = util.random_from({"gently bit", "licked", "tasted", "touched", "tickled", "stroked", "scratched", "rubbed", "sniffed", "kissed"})
+end
+if (body == "thighs") then
+action = util.random_from({"gently bit", "licked", "tasted", "spanked", "tickled", "stroked", "rubbed", "kissed"})
+end
+if (body == "butt") then
+action = util.random_from({"gently bit", "licked", "tasted", "spanked", "tickled", "rubbed", "fingered", "sniffed", "kissed", "fisted"})
+end
+if (body == "neck") then
+action = util.random_from({"gently bit", "licked", "tasted", "tickled", "stroked", "rubbed", "kissed"})
+end
+if (body == "chest") then
+action = util.random_from({"gently bit", "licked", "tickled", "rubbed", "kissed"})
+end
+if (body == "hand") then
+action = util.random_from({"gently bit", "licked", "rubbed", "kissed"})
+end
+if (body == "lips") then
+action = util.random_from({"kissed", "licked"})
+end
+if (body == "hair") then
+action = util.random_from({"pulled", "sniffed", "licked"})
+end
+if (body == "stomach") then
+action = util.random_from({"gently bit", "licked", "tickled", "rubbed", "kissed"})
+end
+
+
+end
+if (role == "dom") and (activity == "anal") and (consent == "given") then
+text = "You grabbed " .. partner .. " by the " .. util.random_from({"feet", "thighs", "butt", "neck", "chest", "hands", "shoulders"}) .. " and had a " .. rough .. " " .. util.random_from({"buttsex", "anal", "anal sex", "buttfuck", "assfuck", "ass pounding", "anal penetration", "anal fuck"}) .. " with them. " .. pleasure .. ""
+end
+if (role == "dom") and (activity == "anal") and (consent == "forced") then
+text = "You grabbed " .. partner .. " by the " .. util.random_from({"feet", "thighs", "butt", "neck", "chest", "hands", "shoulders"}) .. " and gave a " .. rough .. " " .. util.random_from({"buttsex", "anal", "anal sex", "buttfuck", "assfuck", "ass pounding", "anal penetration", "anal fuck"}) .. " to them by force. " .. pleasure .. ""
+end
+if (role == "sub") and (activity == "anal") and (consent == "forced") then
+text = "You were grabbed by the " .. util.random_from({"feet", "thighs", "butt", "neck", "chest", "hands", "shoulders"}) .. " and forced to have a " .. rough .. " " .. util.random_from({"buttsex", "anal", "anal sex", "buttfuck", "assfuck", "ass pounding", "anal penetration", "anal fuck"}) .. " with " .. partner .. ". " .. pleasure .. ""
+end
+if (role == "sub") and (activity == "anal") and (consent == "given") then
+text = "You were grabbed by the " .. util.random_from({"feet", "thighs", "butt", "neck", "chest", "hands", "shoulders"}) .. " and took a " .. rough .. " " .. util.random_from({"buttsex", "anal", "anal sex", "buttfuck", "assfuck", "ass pounding", "anal penetration", "anal fuck"}) .. " from " .. partner .. ". " .. pleasure .. ""
+end
+if (role == "dom") and (activity == "vaginal") and (consent == "given") then
+text = "You grabbed " .. partner .. " by the " .. util.random_from({"feet", "thighs", "butt", "neck", "chest", "hands", "shoulders"}) .. " and had a " .. rough .. " " .. util.random_from({"casual sex", "sex", "vaginal sex", "nookie", "quickie"}) .. " with them. " .. pleasure .. ""
+end
+if (role == "dom") and (activity == "vaginal") and (consent == "forced") then
+text = "You grabbed " .. partner .. " by the " .. util.random_from({"feet", "thighs", "butt", "neck", "chest", "hands", "shoulders"}) .. " and gave a " .. rough .. " " .. util.random_from({"casual sex", "sex", "vaginal sex", "nookie", "quickie"}) .. " to them by force. " .. pleasure .. ""
+end
+if (role == "sub") and (activity == "vaginal") and (consent == "forced") then
+text = "You were grabbed by the " .. util.random_from({"feet", "thighs", "butt", "neck", "chest", "hands", "shoulders"}) .. " and forced to have a " .. rough .. " " .. util.random_from({"sex", "vaginal sex", "nookie", "quickie"}) .. " with " .. partner .. ". " .. pleasure .. ""
+end
+if (role == "sub") and (activity == "vaginal") and (consent == "given") then
+text = "You were grabbed by the " .. util.random_from({"feet", "thighs", "butt", "neck", "chest", "hands", "shoulders"}) .. " and took a " .. rough .. " " .. util.random_from({"casual sex", "sex", "vaginal sex", "nookie", "quickie"}) .. " from " .. partner .. ". " .. pleasure .. ""
+end
+if (role == "dom") and (activity == "oral") and (consent == "forced") then
+text = "You violated " .. partner .. "'s " .. util.random_from({"lips", "mouth"}) .. " with your genitals. " .. pleasure .. ""
+end
+if (role == "dom") and (activity == "oral") and (consent == "given") then
+text = "You used " .. partner .. "'s " .. util.random_from({"lips", "mouth"}) .. " as a wet sleeve for your genitals. " .. pleasure .. ""
+end
+if (role == "sub") and (activity == "oral") and (consent == "forced") then
+text = "" .. partner .. " used your " .. util.random_from({"lips", "mouth"}) .. " by force. " .. pleasure .. ""
+end
+if (role == "sub") and (activity == "oral") and (consent == "given") then
+text = "You licked " .. partner .. "'s " .. util.random_from({"groin", "genitals"}) .. " all over, using your " .. util.random_from({"lips", "mouth"}) .. ". " .. pleasure .. ""
+end
+if (role == "dom") and (activity == "fetishism") and (consent == "given") then
+text = "You " .. action .. " " .. partner .. "'s " .. body .. ". " .. pleasure .. ""
+end
+if (role == "dom") and (activity == "fetishism") and (consent == "forced") then
+text = "You " .. action .. " " .. partner .. "'s " .. body .. " by force. " .. pleasure .. ""
+end
+if (role == "sub") and (activity == "fetishism") and (consent == "forced") then
+text = "" .. partner .. " " .. action .. " your " .. body .. " by force. " .. pleasure .. ""
+end
+if (role == "sub") and (activity == "fetishism") and (consent == "given") then
+text = "" .. partner .. " " .. action .. " your " .. body .. ". " .. pleasure .. ""
+end
+end
+
+if (role == "solo") then
+crawl.mpr("a) - anal masturbation")
+crawl.more()
+crawl.mpr("b) - vaginal masturbation")
+crawl.more()
+crawl.mpr("c) - penile masturbation")
+crawl.more()
+crawl.mpr("d) - random")
+crawl.mpr("<lightmagenta>Select activity.</lightmagenta>")
+res = crawl.c_input_line()
+if (res == "a") then
+activity = "anal"
+end
+if (res == "b") then
+activity = "vaginal"
+end
+if (res == "c") then
+activity = "penile"
+end
+if (res == "d") or (res == nil) or (res == "") then
+activity = util.random_from({"anal", "vaginal", "penile"})
+end
+crawl.mpr("Your activity is " .. activity)
+crawl.more()
+
+if (activity == "anal") then
+body = util.random_from({"ass", "butt", "rectum", "bum", "arse"})
+end
+if (activity == "vaginal") then
+body = util.random_from({"pussy", "clit", "vagina"})
+end
+if (activity == "penile") then
+body = util.random_from({"cock", "dick", "penis", "shaft", "foreskin"})
+end
+
+if c_persist.partner and not (c_persist.partner == "") then
+crawl.mpr("<lightmagenta>What toy do you want to use?</lightmagenta> <yellow>(leave empty for " .. c_persist.partner .. "; type 'random' for a random)</yellow>")
+end
+if not c_persist.partner or (c_persist.partner == "") then
+crawl.mpr("<lightmagenta>What toy do you want to use?</lightmagenta> <yellow>(leave empty for random)</yellow>")
+end
+partner = crawl.c_input_line()
+if (partner == "") or (partner == nil) and c_persist.partner and not (c_persist.partner == "") then
+partner = c_persist.partner
+end
+
+if (partner == "") or (partner == nil) or (partner == "random") and (activity == "anal") then
+partner = crawl.article_a(util.random_from({"fingers", "finger", "thumb", "butt plug", "dildo", "dragon dildo", "vibrator"}))
+end
+
+if (partner == "") or (partner == nil) or (partner == "random") and (activity == "vaginal") then
+partner = crawl.article_a(util.random_from({"fingers", "finger", "thumb", "butt plug", "dildo", "dragon dildo", "vibrator"}))
+end
+
+if (partner == "") or (partner == nil) or (partner == "random") and (activity == "penile") then
+partner = crawl.article_a(util.random_from({"left hand", "right hand", "onahole"}))
+end
+
+crawl.mpr("Your toy is " .. partner)
+c_persist.partner = partner
+crawl.more()
+text = "You have used " .. partner .. " for your " .. activity .. " masturbation. You " .. util.random_from({"rub", "pat", "touch"}) .. " your " .. body .. " after that. " .. pleasure .. ""
+end
+
+crawl.mpr(text)
+crawl.take_note(text)
 end
 
 function raceglyph()
