@@ -3,11 +3,13 @@ Just a bunch of spaghetti code designed for personal use. Includes customization
 
 Installation:
 Just drop this stuff in your "settings" folder wherever your DCSS is installed. Probably could be used for 'online' games, too, but I never tried online DCSS for serious.
-Open your macro.txt and add line:
+
 
 init.txt is optional, you can ignore it if you want. To make script work properly add last line in your own init.txt:
 
 include = puppet.lua
+
+Next step is necessary. Open your macro.txt and add line:
 
 M:[
 
