@@ -41,7 +41,7 @@ crawl.mpr("2 - Colour Inscribe Alt")
 crawl.more()
 crawl.mpr("3 - Dungeon Site")
 crawl.more()
-crawl.mpr("4 - Random Follower <13>(&)</13>")
+crawl.mpr("4 - Random Follower")
 crawl.more()
 crawl.mpr("5 - Random Number (1-100)")
 crawl.more()
@@ -51,25 +51,25 @@ crawl.mpr("7 - Persist Note Default")
 crawl.more()
 crawl.mpr("8 - Persist Note Players")
 crawl.more()
-crawl.mpr("9 - Enchanting <13>(&)</13>")
+crawl.mpr("9 - Enchanting")
 crawl.more()
 crawl.mpr("P - Polymorph")
 crawl.more()
-crawl.mpr("F - Feature Placement <13>(&)</13>")
+crawl.mpr("F - Feature Placement")
 crawl.more()
 crawl.mpr("J - Char Describe Macro (Misc)")
 crawl.more()
 crawl.mpr("D - Drop Everything")
 crawl.more()
-crawl.mpr("b - Build <13>(&)</13>")
+crawl.mpr("b - Build")
 crawl.more()
-crawl.mpr("O - Freeplay <13>(&)</13>")
+crawl.mpr("O - Freeplay")
 crawl.more()
-crawl.mpr("C - Spawn Random <13>(&)</13>")
+crawl.mpr("C - Spawn Random")
 crawl.more()
-crawl.mpr("V - Make Randart <13>(&)</13>")
+crawl.mpr("V - Make Randart")
 crawl.more()
-crawl.mpr("a - Modify Amount <13>(&)</13>")
+crawl.mpr("a - Modify Amount")
 crawl.more()
 crawl.mpr("Z - Console")
 crawl.more()
@@ -191,6 +191,7 @@ if not (you.race() == "Felid") and not (you.race() == "Octopode") and you.turns(
 use_appearance = false
 local name = you.name()
 char_appearance(name)
+--clothing(name)
 char_traits()
 crawl.sendkeys(".")
 --randlocation()
@@ -652,7 +653,15 @@ crawl.take_note("Preferred God: No God.")
 end
 end
 
-function char_appearance(name, hairstyle, body, haircolorstring, hairlengthstring, gender, eyebrows, eyes, voice, beard, tattoo, tattoo_placement)
+function char_appearance(name, hairstyle, body, haircolorstring, hairlengthstring, gender, eyebrows, eyes, voice, beard, tattoo, tattoo_placement,customrace)
+if (hairstyle == "") or (hairstyle == nil) then
+hairstyle = util.random_from({"ponytail", "mohawk", "twintail", "topknot", "curly hair", "wavy hair", "straight hair", "dreadlock", "pompadour", "afro", "braid", "hair", "spiky hair", "bun", "double buns hair", "pigtail", "mullet", "reverse mohawk", "combed hair", "tonsure"})
+end
+
+if (beard == nil) or (beard == "") then
+beard = util.random_from({"moustache", "beard", "goatee", "long beard", "short beard", "shaved beard", "sideburns beard", "whiskers beard", "neckbeard"})
+end
+
 if (tattoo == nil) or (tattoo == "") and (crawl.random2(100) > 75) or (tattoo == "random") then
 tattoo = randcol() .. " " .. util.random_from({"arrow", "arbalest", "spear", "shield", "fireball", "potion", "goblet", "axe", "sword", "dagger", "hammer", "skull", "skeleton", "spikes", "meaningless", "butterfly", "flower", "horn", "hoof", "snake", "wolf", "hound", "star", "triangle", "circle", "letter", "man", "woman", "dragon", "heart", "wings", "spikes", "roses", "unicorn"})
 end
@@ -660,33 +669,37 @@ if (tattoo_placement == nil) or (tattoo_placement == "") then
 tattoo_placement = util.random_from({"groin", "shoulder", "thigh", "butt", "neck", "chest", "hand", "arm", "leg", "face", "stomach", "foot"})
 end
 
-if (you.race() == "Draconian" or you.race() == "Merfolk" or you.race() == "Naga" or you.race() == "Barachi")and(hairstyle == nil or hairstyle == "") then
+if (customrace == nil) or (customrace == "") then
+customrace = randomrace(you.race())
+end
+
+if you.race() == "Draconian" or you.race() == "Merfolk" or you.race() == "Naga" or you.race() == "Barachi" then
 hairstyle = util.random_from({"frills", "spikes", "decorated spikes"})
 beard = util.random_from({"tentacles", "shaved beard"})
 end
 
-if (you.race() == "Demonspawn")and(hairstyle == nil or hairstyle == "") then
+if you.race() == "Demonspawn" then
 hairstyle = util.random_from({"horns", "horn", "spikes", "decorated spikes"})
 beard = util.random_from({"chin horns", "chin spikes"})
 end
 
-if (you.race() == "Vine Stalker" or you.race() == "Spriggan")and(hairstyle == nil or hairstyle == "") then
+if you.race() == "Vine Stalker" or you.race() == "Spriggan" then
 hairstyle = "" .. util.random_from({"leaves", "branches", "thorns", "mushrooms", "flowers", "tangles", "berries"}) .. " all over their body"
 beard = util.random_from({"leaves", "branches", "thorns", "mushrooms", "flowers", "tangles", "berries"}) .. " all over their face"
 hairlengthstring = util.random_from({"small", "medium-sized", "large", "huge", "colossal"})
 end
 
-if (you.race() == "Deep Dwarf") and (beard == nil or beard == "") then
+if you.race() == "Deep Dwarf" then
 beard = util.random_from({"beard", "long beard", "short beard"})
 end
 
-if (you.race() == "Tengu") and(hairstyle == nil or hairstyle == "") then
+if you.race() == "Tengu" then
 hairlengthstring = util.random_from({"small", "medium-sized", "large", "huge", "colossal"})
 hairstyle = util.random_from({"flight feathers", "contour feathers", "down feathers", "bristle feathers", "plumed feathers"})
 beard = util.random_from({"hooked beak", "cone shaped beak", "curved beak", "straight beak", "thin beak", "wide beak", "strong beak"})
 end
 
-if (you.race() == "Formicid") and(hairstyle == nil or hairstyle == "") then
+if you.race() == "Formicid" then
 hairlengthstring = util.random_from({"small", "medium-sized", "large", "huge", "colossal"})
 hairstyle = util.random_from({"thread-like antennae", "beaded antennae", "sawtoothed antennae", "bristle-like antennae", "comb-like antennae"})
 beard = util.random_from({"pair of chewing mandibles", "pair of stylets", "pair of long mandibles", "pair of hardened mandibles", "pair of large mandibles", "pair of piercing mandibles", "pair of strong mandibles"})
@@ -702,21 +715,14 @@ tattoo_placement = util.random_from({"body", "feet"})
 end
 end
 
-if (you.race() == "Deep Elf")and(beard == nil or beard == "") then
+if you.race() == "Deep Elf" then
 beard = "shaved beard"
-end
-
-if (hairstyle == "") or (hairstyle == nil) then
-hairstyle = util.random_from({"ponytail", "mohawk", "twintail", "topknot", "curly hair", "wavy hair", "straight hair", "dreadlock", "pompadour", "afro", "braid", "hair", "spiky hair", "bun", "double buns hair", "pigtail", "mullet", "reverse mohawk", "combed hair", "tonsure"})
-end
-
-if (beard == nil) or (beard == "") then
-beard = util.random_from({"moustache", "beard", "goatee", "long beard", "short beard", "shaved beard", "sideburns beard", "whiskers beard", "neckbeard"})
 end
 
 if you.race() == "Gargoyle" or you.race() == "Ghoul" or you.race() == "Spriggan" or you.race() == "Vine Stalker" or you.race() == "Demigod" or you.race() == "Mummy" then
 eyes = "" .. util.random_from({"glowing ", "glimmering ", "shimmering ", "shining ", "sparkling "}) .. randcol() .. ""
 end
+
 if (body == "") or (body == nil) then
 body = util.random_from({"fat", "muscular", "slender", "emaciated", "obese", "average"})
 end
@@ -750,6 +756,9 @@ end
 if you.race() == "Ghoul" then
 body = "emaciated"
 end
+
+crawl.mpr("" .. name .. " is " .. crawl.article_a("" .. customrace .. "."))
+
 crawl.mpr("" .. name .. " has ".. crawl.article_a("" ..   haircolorstring .. " " .. hairlengthstring .. " " .. hairstyle .. "") .. ".")
 
 if (gender == "masculine") or you.race() == "Tengu" then
@@ -785,7 +794,8 @@ crawl.mpr("h) - voice")
 crawl.mpr("j) - beard")
 crawl.mpr("k) - tattoo")
 crawl.mpr("l) - tattoo placement")
-crawl.mpr("m) - everything ")
+crawl.mpr("m) - race")
+crawl.mpr("n) - everything ")
 res = crawl.c_input_line()
 if (res == "a") then
 crawl.clear_messages()
@@ -855,6 +865,12 @@ tattoo_placement = crawl.c_input_line()
 end
 if (res == "m") then
 crawl.clear_messages()
+crawl.mpr("Current race: " .. customrace)
+crawl.mpr("Please, enter new race (leave blank for random)")
+customrace = crawl.c_input_line()
+end
+if (res == "n") then
+crawl.clear_messages()
 hairstyle = ""
 body = ""
 haircolorstring = ""
@@ -867,10 +883,11 @@ beard = ""
 tattoo = ""
 tattoo_placement = ""
 end
-char_appearance(name, hairstyle, body, haircolorstring, hairlengthstring, gender, eyebrows, eyes, voice, beard, tattoo, tattoo_placement)
+char_appearance(name, hairstyle, body, haircolorstring, hairlengthstring, gender, eyebrows, eyes, voice, beard, tattoo, tattoo_placement, customrace)
 end
 if (res == true) then
 crawl.take_note("+++========================+++")
+crawl.take_note("" .. name .. " is " .. crawl.article_a("" .. customrace .. "."))
 crawl.take_note("" .. name .. " has ".. crawl.article_a("" ..   haircolorstring .. " " .. hairlengthstring .. " " .. hairstyle .. "") .. ".")
 if gender == "masculine" then
 crawl.take_note("" .. name .. " has " .. crawl.article_a("" .. haircolorstring .. " " .. beard .. "") .. ".")
@@ -885,6 +902,34 @@ end
 crawl.take_note("+++========================+++")
 end
 end
+
+function clothing(name)
+local shirt = util.random_from({"tunic", "vest", "coat", "doublet", "apron", "tank top", "harness", "long shirt", "shirt", "cloth rags", "wound dressing", "waistcoat", "bra", "dress"})
+local pants = util.random_from({"kilt", "skirt", "panties", "tight pants", "baggy pants", "shorts", "chonglers", "thong", "boxers", "loincloth", "pants", ""})
+local socks = util.random_from({"socks", "high socks", "long socks", "stockings", "fishnet stockings", "pantyhose", ""})
+local pattern = util.random_from({"striped ", "spotted ", "checkered ", "plaid ", ""})
+local clothing =  string
+if you.race() == "Naga" then
+socks = ""
+end
+if you.race() == "Centaur" then
+pants = ""
+end
+if not(shirt == "") then
+clothing = "".. name .. " is wearing " .. crawl.article_a(shirt)
+end
+if not(pants == "") and not(socks == "") then
+clothing = "" .. clothing .. ", " .. crawl.article_a(pants)
+end
+if not(pants == "") and socks == "" then
+clothing = "" .. clothing .. ", and " .. crawl.article_a(pants)
+end
+if not(socks == "") then
+clothing = "" .. clothing .. ", and " .. crawl.article_a(socks)
+end
+crawl.take_note("" .. clothing .. ".")
+end
+
 
 function length()
 local length = string
@@ -1508,6 +1553,94 @@ crawl.take_note(quirk2)
 crawl.take_note("+++========================+++")
 end
 
+end
+
+function randomrace(race)
+if race == "Hill Orc" then
+race = util.random_from({"Orc", "Lava orc", "Hill orc"})
+end
+if race == "Minotaur" then
+race = util.random_from({"Minotaur", "Mutant beast", "Harpy", "Sphinx"})
+end
+if race == "Merfolk" then
+race = util.random_from({"Merfolk", "Water nymph", "Merfolk siren"})
+end
+if race == "Gargoyle" then
+race = util.random_from({"Gargoyle", "Golem", "Statue"})
+end
+if race == "Draconian" then
+race = util.random_from({"Draconian", "Lizardman"})
+end
+if race == "Halfling" then
+race = util.random_from({"Halfling", "Gnome"})
+end
+if race == "Troll" then
+race = util.random_from({"Troll", "Moon troll", "Iron troll", "Deep troll"})
+end
+if race == "Ghoul" then
+race = util.random_from({"Ghoul", "Necrophage", "Bog body", "Wight", "Zombie"})
+end
+if race == "Human" then
+race = util.random_from({"Human"})
+end
+if race == "Kobold" then
+race = util.random_from({"Kobold", "Big kobold"})
+end
+if race == "Demonspawn" then
+race = util.random_from({"Demonspawn", "Imp", "Devil"})
+end
+if race == "Centaur" then
+race = util.random_from({"Centaur", "Faun", "Satyr", "Yaktaur"})
+end
+if race == "Spriggan" then
+race = util.random_from({"Spriggan", "Fairy", "Pixie", "Dryad"})
+end
+if race == "Tengu" then
+race = util.random_from({"Tengu"})
+end
+if race == "Deep Elf" then
+race = util.random_from({"Deep elf", "Elf"})
+end
+if race == "Ogre" then
+race = util.random_from({"Ogre", "Two-headed ogre", "Cyclops", "Titan", "Ettin", "Giant"})
+end
+if race == "Deep Dwarf" then
+race = util.random_from({"Deep dwarf", "Dwarf"})
+end
+if race == "Gnoll" then
+race = util.random_from({"Gnoll", "Goblin", "Hobgoblin"})
+end
+if race == "Vine Stalker" then
+race = util.random_from({"Vine stalker", "Wandering mushroom", "Thorn hunter"})
+end
+if race == "Vampire" then
+race = util.random_from({"Vampire", "Jiangshi"})
+end
+if race == "Demigod" then
+race = util.random_from({"Demigod", "Djinni", "Efreet"})
+end
+if race == "Formicid" then
+race = util.random_from({"Formicid", "Humanoid ant", "Entropy weaver"})
+end
+if race == "Naga" then
+race = util.random_from({"Naga", "Salamander", "Humanoid serpent"})
+end
+if race == "Octopode" then
+race = util.random_from({"Octopode", "Abomination", "Horror"})
+end
+if race == "Felid" then
+race = util.random_from({"Felid", "Jackal"})
+end
+if race == "Barachi" then
+race = util.random_from({"Barachi", "Humanoid frog"})
+end
+if race == "Mummy" then
+race = util.random_from({"Mummy", "Lich", "Revenant", "Ancient pharaoh"})
+end
+if race == "Palentonga" then
+race = util.random_from({"Palentonga"})
+end
+return race
 end
 
 function console()
